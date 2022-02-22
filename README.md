@@ -2,6 +2,8 @@
 
 Close you eyes and imagine the popular chrome game, but instead on chrome it is in your cli
 
+![Alt text](dino_pic.jpg)
+
 ## Available commands
 
 ### `python dino_cli.py <command>`
