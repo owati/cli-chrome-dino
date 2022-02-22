@@ -1,4 +1,5 @@
 from random import randint as ran
+import time
 '''
 the major class to be used in the game
 '''
@@ -95,9 +96,9 @@ class Dinosaur:
             "up": False
         }
     
-    def draw(self):
+    def draw(self, playing=True):
         if self.state == "running":
-            self.left_now = not self.left_now
+            self.left_now = not self.left_now if playing else self.left_now
             return self.left if self.left_now else self.right
         else:
             
@@ -114,6 +115,9 @@ class Dinosaur:
 
 
             return str_image
+
+    def get_height(self):
+        return self.jump_params
 
     def set_state(self, new_state):
         if(self.state == "jumping"):
@@ -136,46 +140,46 @@ class Map:
             [f'{"-" if x % 9 == 0 else " "}' for x in range(self.width)]
         ]
 
-    def draw(self):
+    def draw(self, playing=True):
         return_val = [''.join(x) for x in self.layers]
         top_array, mid_array, bot_array = [],[],[]
 
+        if playing:
+            for i in self.layers:
+                ind = self.layers.index(i)
+                i.reverse()
+                i.pop()
+                i.reverse()
 
-        for i in self.layers:
-            ind = self.layers.index(i)
-            i.reverse()
-            i.pop()
-            i.reverse()
 
+                if ind == 0:
+                    top_array = i
+                elif ind == 1:
+                    mid_array = i
+                else: bot_array = i
 
-            if ind == 0:
-                top_array = i
-            elif ind == 1:
-                mid_array = i
-            else: bot_array = i
+            top, middle , bottom = ran(0, 100), ran(0, 100), ran(0,100)
 
-        top, middle , bottom = ran(0, 100), ran(0, 100), ran(0,100)
-
-        if(top_array[self.width - 2] == '_'):
-            if top > 85 :
-                top_array.append(',')
+            if(top_array[self.width - 2] == '_'):
+                if top > 95 :
+                    top_array.append(',')
+                else:
+                    top_array.append('_')
             else:
-                top_array.append('_')
-        else:
-            val = ''.join(top_array[self.width - 3: self.width - 1])
-            if val == "_," or val == '-*':
-                top_array.append("-")
-            elif val == ',-':
-                top_array.append('*')
-            elif val == '*-':
-               top_array.append(",")
-            else:
-                top_array.append("_")
-        
-        mid_array.append('-' if middle > 70 else " ")
-        bot_array.append('-' if bottom > 70 else " ")
+                val = ''.join(top_array[self.width - 3: self.width - 1])
+                if val == "_," or val == '-*':
+                    top_array.append("-")
+                elif val == ',-':
+                    top_array.append('*')
+                elif val == '*-':
+                    top_array.append(",")
+                else:
+                    top_array.append("_")
+            
+            mid_array.append('-' if middle > 70 else " ")
+            bot_array.append('-' if bottom > 70 else " ")
 
-        self.layers = [top_array, mid_array, bot_array]
+            self.layers = [top_array, mid_array, bot_array]
 
         return return_val
 
@@ -214,3 +218,5 @@ class Cactus:
                     ]
                 except: 
                     return ['', '', '']
+
+
