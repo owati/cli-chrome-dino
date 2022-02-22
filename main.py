@@ -147,7 +147,7 @@ def main(high=0):
         std.addstr(27, 0,ground.draw(playing)[1])
         std.addstr(28, 0,ground.draw(playing)[2])
         std.addstr(8, curses.COLS - 17,f'scores : {score}')
-        std.addstr(9, curses.COLS - 17,f'Hscores : {high}')
+        std.addstr(9, curses.COLS - 17,f'Hscores : {1049}')
 
         if game_state == "end":
             std.addstr(8, int(curses.COLS / 2) - int(len(GAME_OVER) / 2) ,GAME_OVER)
