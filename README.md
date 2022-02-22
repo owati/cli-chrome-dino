@@ -23,5 +23,5 @@ this displays an help message
 ### `How to play`
 
 spacebar or arrow up key to jump..
-'p' to pause
-'q' quit
+'p' to pause...
+'q' to quit
