@@ -34,6 +34,8 @@ playing = False  # if the game is play
 score = 0  # the current score
 loop = True # the loop variable of the key handler
 
+game_speed = 0.1 # the speed of the game
+
 def detect_key_pressed():
     global key_pressed
     while loop:
@@ -99,7 +101,10 @@ def main(high=0):
                         #     high = score
                         #     # update = threading.Thread(target=update_highscore, args=[hscore])
                         #     # update.start()
-            draw_cactus(cac, counter[i][0])                
+            draw_cactus(cac, counter[i][0])   
+
+    def increase_speed(score, speed):
+        return speed - (int(score / 100) * 0.01)
 
   
     while True:
@@ -107,6 +112,7 @@ def main(high=0):
         global playing
         global game_state
         global counter
+        global game_speed
 
         # give the keys that were pressed actions...
         if key_pressed == ord('q'):
@@ -161,9 +167,11 @@ def main(high=0):
         # score sddition
         score += 1 if playing else 0
 
+        
+
         # refresh rate of the game
         std.refresh()
-        time.sleep(0.1)
+        time.sleep(increase_speed(score, game_speed))
 
 
 
